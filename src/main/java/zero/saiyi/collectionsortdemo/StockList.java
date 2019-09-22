@@ -25,17 +25,41 @@ public class StockList {
 	}
 
 	public int sellStock(StockItem sellItem, int quantity) {
-		StockItem inStock = stockLists.getOrDefault(sellItem.getName(), null);
-
-		if (inStock != null && (inStock.getquantityInStock() >= quantity) && quantity > 0) {
-			inStock.adjustquantityInStock(-quantity);
-			
+		StockItem inStock = stockLists.getOrDefault(sellItem, null);
+		
+		if(inStock != null && quantity >0) {
+			inStock.finaliseStock(quantity);
 			return quantity;
 		}
+		
+//		StockItem inStock = stockLists.getOrDefault(sellItem.getName(), null);
+//
+//		if (inStock != null && (inStock.getquantityInStock() >= quantity) && quantity > 0) {
+//			inStock.adjustquantityInStock(-quantity);
+//			
+//			return quantity;
+//		}
 
 		return 0;
 	}
-
+	public int reserveStock(StockItem item,int quantity) {
+		StockItem inStock=stockLists.get(item);
+		if(inStock != null && quantity > 0) {
+			
+			return inStock.reserveStock(quantity);
+		}
+		return 0;
+	}
+	
+	public int unReserveStock(StockItem item, int quantity){
+		StockItem inStock = stockLists.get(item);
+		if(inStock != null && quantity > 0) {
+			return inStock.unReserveStock(quantity);
+		}
+		
+		return 0;
+	}
+	
 	public StockItem get(String key) {
 		return stockLists.get(key);
 	}

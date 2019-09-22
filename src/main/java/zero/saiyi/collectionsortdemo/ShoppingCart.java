@@ -27,6 +27,26 @@ public class ShoppingCart {
 		return 0;
 	}
 
+	public int removeItem(StockItem item, int quantity) {
+		if(item != null & quantity > 0) {
+			
+			int quantityOfItemInCart = lists.getOrDefault(item, 0);
+			int newQuantity = quantityOfItemInCart + quantity;
+			
+			if(newQuantity > 0) {
+				lists.put(item, newQuantity);
+				return quantity;
+			}else if( newQuantity == 0) {
+				lists.remove(item);
+				return 0;
+			}
+			
+		}	
+		
+		return 0;
+	}
+	
+	
 	public Map<StockItem, Integer> getLists() {
 		return Collections.unmodifiableMap(lists);
 	}

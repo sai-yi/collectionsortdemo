@@ -46,6 +46,9 @@ public class ShoppingCart {
 		return 0;
 	}
 	
+	public void clearCart() {
+		this.lists.clear();
+	}
 	
 	public Map<StockItem, Integer> getLists() {
 		return Collections.unmodifiableMap(lists);

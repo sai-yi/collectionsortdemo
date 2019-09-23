@@ -1,4 +1,5 @@
 package zero.saiyi.collectionsortdemo;
+import java.util.Map;
 
 /**
  * Hello world!
@@ -30,38 +31,56 @@ public class App {
 
 		System.out.println(stockList);
 		ShoppingCart tom = new ShoppingCart("Tom");
-		shopping(tom, stockList.get("Book"), 10);
+		shopping(tom, "Book", 10);
 		System.out.println(tom);
-		shopping(tom, stockList.get("Beer"), 10);
+		shopping(tom, "Beer", 10);
 		System.out.println(tom);
-		shopping(tom, stockList.get("Juice"), 40);
+		shopping(tom, "Juice", 40);
 		System.out.println(tom);
 		
+		System.out.println(" -- Before CheckOut Items in Stock ----");
 		System.out.println(stockList);
-		
-		System.out.println("test modefy item in stock");
-		stockList.get("Juice").adjustquantityInStock(-40);
-		
-		
-		stockList.get("Beer").adjustquantityInStock(-80);
-		shopping(tom,stockList.get("Beer"),60);
+		System.out.println("-----------------------------------------");
+		System.out.println("Tom's Cart After Checkout !!!!!!! must be zero");
+		System.out.println(tom);
+		System.out.println("---------------------------------");
+		System.out.println(" --- After Checkout Item's in Stock --------");
 		System.out.println(stockList);
 		
 
 	}
-
-	public static int shopping(ShoppingCart cart, StockItem item, int quantity) {
-		StockItem inStock = stockList.get(item.getName());
-		if (inStock.getquantityInStock() >= quantity && quantity > 0) {
-
-			if (stockList.sellStock(item, quantity) != 0) {
-				cart.addToCart(item, quantity);
-				return quantity;
-			}
+	
+	public static void checkOut(ShoppingCart cart) {
+		for(Map.Entry<StockItem, Integer> item : cart.getLists().entrySet()) {
+			stockList.sellStock(item.getKey(), item.getValue());
 		}
-		System.out.println("Sorry we don't sell " + item);
+		cart.clearCart();
+	}
+
+	public static int shopping(ShoppingCart cart, String item, int quantity) {
+		
+		StockItem inStock = stockList.get(item);
+		if(inStock == null) {
+			System.out.println("Sorry we don't sell "+ item);
+			return 0;
+		}
+		if(inStock.reserveStock(quantity) == quantity) {
+			return cart.addToCart(inStock, quantity);
+		}
+		
 		return 0;
 
 	}
-
+	public static int unReserveItem(ShoppingCart cart,StockItem item,int quantity) {
+		StockItem inStock = stockList.get(item.getName());
+		if(inStock == null) {
+			return 0;
+		}	
+		if(inStock.unReserveStock(quantity) != 0) {
+			return cart.removeItem(item, quantity);
+		}
+	   return 0;
+	}
+	
+	
 }

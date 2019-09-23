@@ -16,7 +16,7 @@ public class StockList {
 		if (item != null) {
 			StockItem inStock = stockLists.getOrDefault(item.getName(), item);
 			if (inStock != item) {
-				item.adjustquantityInStock(inStock.getquantityInStock());
+				item.adjustquantityInStock(inStock.getquantityInStock());				
 			}
 			stockLists.put(item.getName(), item);
 			return item.getquantityInStock();
@@ -43,8 +43,8 @@ public class StockList {
 		return 0;
 	}
 	public int reserveStock(StockItem item,int quantity) {
-		StockItem inStock=stockLists.get(item);
-		if(inStock != null && quantity > 0) {
+		StockItem inStock=stockLists.get(item.getName());
+		if((inStock != null) && quantity > 0) {
 			
 			return inStock.reserveStock(quantity);
 		}
@@ -52,8 +52,8 @@ public class StockList {
 	}
 	
 	public int unReserveStock(StockItem item, int quantity){
-		StockItem inStock = stockLists.get(item);
-		if(inStock != null && quantity > 0) {
+		StockItem inStock = stockLists.get(item.getName());
+		if((inStock != null) && quantity > 0) {
 			return inStock.unReserveStock(quantity);
 		}
 		
@@ -71,13 +71,13 @@ public class StockList {
 	public String toString() {
 		
 		String str="\n In Stock \n";
-		double totalAmount=0.0;
+		//double totalAmount=0.0;
 		for(Map.Entry<String,StockItem> item : stockLists.entrySet()) {
 			StockItem itemInStock = item.getValue();
-			double amounts= itemInStock.getPrice() * itemInStock.getquantityInStock();
+			//double amounts= itemInStock.getPrice() * itemInStock.getquantityInStock();
 			
 			str += itemInStock.getName() + " There are "+ itemInStock.getquantityInStock()+" in the Stock";
- 			totalAmount += amounts;
+ 			//totalAmount += amounts;
  			str+= " and value of items : "+String.format("%.2f", itemInStock.getPrice() * itemInStock.getquantityInStock())+"\n";
 		}
 		

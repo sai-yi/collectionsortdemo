@@ -9,7 +9,7 @@ public class App {
 	private static StockList stockList = new StockList();
 
 	public static void main(String[] args) {
-		// System.out.println("Hello World!");
+
 		StockItem temp = new StockItem("Cup", 13.25, 50);
 		stockList.addItem(temp);
 
@@ -25,10 +25,6 @@ public class App {
 		temp = new StockItem("Bread", 2.25, 200);
 		stockList.addItem(temp);
 
-//		temp =new StockItem("Bread",3.0,20);
-//		stockList.addItem(temp);
-//		
-
 		System.out.println(stockList);
 		ShoppingCart tom = new ShoppingCart("Tom");
 		shopping(tom, "Book", 10);
@@ -41,8 +37,10 @@ public class App {
 		System.out.println(" -- Before CheckOut Items in Stock ----");
 		System.out.println(stockList);
 		System.out.println("-----------------------------------------");
+		//checkOut(tom);
 		System.out.println("Tom's Cart After Checkout !!!!!!! must be zero");
 		System.out.println(tom);
+
 		System.out.println("---------------------------------");
 		System.out.println(" --- After Checkout Item's in Stock --------");
 		System.out.println(stockList);
@@ -64,7 +62,7 @@ public class App {
 			System.out.println("Sorry we don't sell "+ item);
 			return 0;
 		}
-		if(inStock.reserveStock(quantity) == quantity) {
+		if(stockList.reserveStock(inStock,quantity) != 0) {
 			return cart.addToCart(inStock, quantity);
 		}
 		
@@ -76,7 +74,7 @@ public class App {
 		if(inStock == null) {
 			return 0;
 		}	
-		if(inStock.unReserveStock(quantity) != 0) {
+		if(stockList.unReserveStock(inStock,quantity) != 0) {
 			return cart.removeItem(item, quantity);
 		}
 	   return 0;

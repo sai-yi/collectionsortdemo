@@ -19,7 +19,7 @@ public class StockItem implements Comparable<StockItem> {
 	}
 
 	public int getquantityInStock() {
-		return this.quantityInStock - reserve;
+		return this.quantityInStock - this.reserve;
 	}
 	
 

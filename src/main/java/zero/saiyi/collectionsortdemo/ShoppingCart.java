@@ -31,7 +31,7 @@ public class ShoppingCart {
 		if(item != null & quantity > 0) {
 			
 			int quantityOfItemInCart = lists.getOrDefault(item, 0);
-			int newQuantity = quantityOfItemInCart + quantity;
+			int newQuantity = quantityOfItemInCart - quantity;
 			
 			if(newQuantity > 0) {
 				lists.put(item, newQuantity);

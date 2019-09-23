@@ -17,11 +17,15 @@ public class StockItem implements Comparable<StockItem> {
 		this.price = price;
 		this.quantityInStock = quantityInStock;
 	}
-
-	public int getquantityInStock() {
-		return this.quantityInStock - this.reserve;
+	public int availableQuantityInStock() {
+		return getquantityInStock() - reserve;
 	}
-	
+	public int getquantityInStock() {
+		return this.quantityInStock;
+	}
+	public int getReserve() {
+		return this.reserve;
+	}
 
 	public String getName() {
 		return this.name;
@@ -34,21 +38,22 @@ public class StockItem implements Comparable<StockItem> {
 	}
 
 	public int reserveStock(int quantity) {
-		if(quantity <= getquantityInStock()) {
-			this.reserve += quantity;
+		if(quantity <= availableQuantityInStock()) {
+			this.reserve = this.reserve + quantity;
 			return quantity;
 		}
 		return 0;
 	}
 	public int unReserveStock(int quantity) {
 		if(quantity <= this.reserve) {
-			this.reserve -= quantity;
+			this.reserve = this.reserve- quantity;
 			return quantity;
 		}
 		return 0;
 	}
 	public int finaliseStock(int quantity) {
 		if( quantity <= this.reserve) {
+			//System.out.println(this.getName()+" : "+quantity+" final reserve" );
 			this.quantityInStock -= quantity;
 			this.reserve -= quantity;
 			return quantity;
@@ -87,7 +92,7 @@ public class StockItem implements Comparable<StockItem> {
 		return this.name.hashCode() + 54;
 	}
 	public String toString() {
-		return "{"+this.name+" : "+this.price+" : "+this.getquantityInStock()+" } ";
+		return "{"+this.name+" : "+this.price+" : "+this.getquantityInStock()+" : reserve :"+this.reserve+" } ";
 	}
 	public int compareTo(StockItem otherItem) {
 		if (otherItem == this) {

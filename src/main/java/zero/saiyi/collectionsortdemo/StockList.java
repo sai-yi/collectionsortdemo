@@ -25,11 +25,11 @@ public class StockList {
 	}
 
 	public int sellStock(StockItem sellItem, int quantity) {
-		StockItem inStock = stockLists.getOrDefault(sellItem, null);
-		
+		StockItem inStock = stockLists.getOrDefault(sellItem.getName(), null);
+	//	System.out.println(inStock);
 		if(inStock != null && quantity >0) {
-			inStock.finaliseStock(quantity);
-			return quantity;
+			return inStock.finaliseStock(quantity);
+			//return quantity;
 		}
 		
 //		StockItem inStock = stockLists.getOrDefault(sellItem.getName(), null);
@@ -78,6 +78,7 @@ public class StockList {
 			
 			str += itemInStock.getName() + " There are "+ itemInStock.getquantityInStock()+" in the Stock";
  			//totalAmount += amounts;
+			str+=" : reserve "+item.getValue().getReserve()+" ";
  			str+= " and value of items : "+String.format("%.2f", itemInStock.getPrice() * itemInStock.getquantityInStock())+"\n";
 		}
 		

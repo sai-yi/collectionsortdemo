@@ -33,11 +33,11 @@ public class App {
 		System.out.println(tom);
 		shopping(tom, "Juice", 40);
 		System.out.println(tom);
-		
+		unReserveItem(tom, "Beer", 5);
 		System.out.println(" -- Before CheckOut Items in Stock ----");
 		System.out.println(stockList);
 		System.out.println("-----------------------------------------");
-		//checkOut(tom);
+		checkOut(tom);
 		System.out.println("Tom's Cart After Checkout !!!!!!! must be zero");
 		System.out.println(tom);
 
@@ -45,7 +45,23 @@ public class App {
 		System.out.println(" --- After Checkout Item's in Stock --------");
 		System.out.println(stockList);
 		
+		ShoppingCart nick =new ShoppingCart("Nick");
+		if(shopping(nick, "Juice", 10) ==0) {
+			System.out.println("Sorry Juices have gone choose another");
+		}
+		System.out.println("reduce Beer -65 "+stockList.get("Beer").adjustquantityInStock(-65));
+		shopping(nick,"Beer",80);
+		shopping(nick,"Ball Point Pen",30);
+		System.out.println("This one will not be in the cart");
+		shopping(nick,"Beer",4);
+		System.out.println(nick);
 
+		shopping(nick,"Book",50);
+		System.out.println("Before ========== checkout");
+		System.out.println(stockList);
+		checkOut(nick);
+		System.out.println("After ========== checkOut");
+		System.out.println(stockList);
 	}
 	
 	public static void checkOut(ShoppingCart cart) {
@@ -69,13 +85,13 @@ public class App {
 		return 0;
 
 	}
-	public static int unReserveItem(ShoppingCart cart,StockItem item,int quantity) {
-		StockItem inStock = stockList.get(item.getName());
+	public static int unReserveItem(ShoppingCart cart,String item,int quantity) {
+		StockItem inStock = stockList.get(item);
 		if(inStock == null) {
 			return 0;
 		}	
-		if(stockList.unReserveStock(inStock,quantity) != 0) {
-			return cart.removeItem(item, quantity);
+		if(cart.removeItem(inStock,quantity) != 0) {
+			return stockList.unReserveStock(inStock, quantity);
 		}
 	   return 0;
 	}
